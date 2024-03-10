@@ -1,9 +1,5 @@
-import 'dart:async';
-
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:rxdart/rxdart.dart';
-import 'package:tomorrow_weather/core/utils/helpers/string_utils.dart';
 
 class LocationService {
   LocationService._();
@@ -13,9 +9,7 @@ class LocationService {
   static LocationService get instance => _instance ??= LocationService._();
 
   // For current Location
-  final BehaviorSubject<Position> _currentLocationController =
-      BehaviorSubject<Position>();
-  Position get currentLocation => _currentLocationController.value;
+  Position? _position;
   bool get hasPermission =>
       _permission == LocationPermission.always ||
       _permission == LocationPermission.whileInUse;
@@ -35,58 +29,20 @@ class LocationService {
     speedAccuracy: 0,
   );
 
-  Position get currentOrLastKnownPosition {
-    if (_positionStreamSubscription == null ||
-        _positionStreamSubscription!.isPaused) {
-      startUpdatingLocation();
-    }
-    if (_currentLocationController.hasValue) {
-      return _currentLocationController.value;
-    } else {
-      getCurrentOrLastKnownPosition();
-      return dummyPosition;
-    }
-  }
+  Position get currentLocation => _position ?? dummyPosition;
 
   init() async {
     _permission = await Geolocator.checkPermission();
     if (hasPermission) {
-      LocationService.instance.getCurrentOrLastKnownPosition();
+      await LocationService.instance.getCurrentOrLastKnownPosition();
     } else if (_permission == LocationPermission.denied) {
       _permission = await Geolocator.requestPermission();
     }
   }
 
   Future<void> getCurrentOrLastKnownPosition() async {
-    Position? lastKnownPosition = await Geolocator.getLastKnownPosition();
-    if (lastKnownPosition != null) {
-      _currentLocationController.add(lastKnownPosition);
-    } else {
-      _currentLocationController.add(dummyPosition);
-    }
-    Geolocator.getCurrentPosition()
-        .then((value) => {_currentLocationController.add(value)});
-  }
-
-  // For GPS Stream
-  Stream<ServiceStatus> get gpsStatus => Geolocator.getServiceStatusStream();
-
-  StreamSubscription<Position>? _positionStreamSubscription;
-  startUpdatingLocation() {
-    try {
-      _positionStreamSubscription =
-          Geolocator.getPositionStream().listen((Position position) {
-        print('position: $position');
-        _currentLocationController.add(position);
-      });
-    } catch (e) {
-      // Handle exceptions
-      print("Error: $e");
-    }
-  }
-
-  Future<void> stopUpdatingLocation() async {
-    await _positionStreamSubscription?.cancel();
+    _position = dummyPosition;
+    _position = await Geolocator.getCurrentPosition();
   }
 
   // Reverse Geocoding Function
@@ -95,10 +51,8 @@ class LocationService {
     List<Placemark> placemarks = await placemarkFromCoordinates(lat, long);
     Placemark placemark = placemarks[0];
     String city = "";
-    if (placemark.subLocality.isNotNullAndEmpty()) {
-      city = placemark.subLocality!;
-    } else if (placemark.locality.isNotNullAndEmpty()) {
-      city = placemark.locality!;
+    if (placemark.locality != null) {
+      city = placemark.locality ?? "";
     }
     String state = placemark.administrativeArea ?? "";
     if (city.length > 9) {
