@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get_it/get_it.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:tomorrow_weather/core/services/location_service.dart';
@@ -35,13 +36,15 @@ initApp() async {
 /// It also registers the various use cases, repositories, and clients required by the application.
 Future<void> loadDependencies() async {
   final dio = Dio();
-  dio.interceptors.add(PrettyDioLogger(
-    requestHeader: true,
-    requestBody: true,
-    responseBody: true,
-    responseHeader: false,
-    error: true,
-  ));
+  if (kDebugMode) {
+    dio.interceptors.add(PrettyDioLogger(
+      requestHeader: true,
+      requestBody: true,
+      responseBody: true,
+      responseHeader: false,
+      error: true,
+    ));
+  }
 
   sl
     ..registerFactory(() => WeatherBloc(
