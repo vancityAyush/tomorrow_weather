@@ -3,8 +3,8 @@ Tomorrow Weather is a Flutter-based weather application that uses the Tomorrow.i
 
 ## Screenshots
 
-![Screenshot 1](./screenshots/screenshot1.png)
-![Screenshot 2](./screenshots/screenshot2.png)
+![Screenshot 1](./screenshots/ss1.jpg)
+![Screenshot 2](./screenshots/ss2.jpg)
 
 Features
 Current weather conditions
