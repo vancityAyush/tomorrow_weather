@@ -1,16 +1,16 @@
 Tomorrow Weather
 Tomorrow Weather is a Flutter-based weather application that uses the Tomorrow.io weather APIs to provide weather forecasts. This application is compatible with both Android and iOS platforms.
 
+## Screenshots
+
+![Screenshot 1](./screenshots/screenshot1.png)
+![Screenshot 2](./screenshots/screenshot2.png)
+
 Features
 Current weather conditions
 Hourly and weekly forecasts
 Location-based weather updates
-Configuration
-Before you can run the application, you need to configure the API key.
 
-Open the file lib/core/utils/constants.dart.
-Replace the kApiKey constant with your Tomorrow.io API key:
-Running the Project
 To run this project, you need to have Flutter and Dart installed on your system. If you haven't installed them yet, you can follow the instructions on the Flutter website.
 
 ## Configuration
@@ -38,6 +38,37 @@ This project uses `build_runner` and `easy_localization` for code generation. To
 
 Please ensure to run these commands every time you make changes to the files that need code generation.
 
+## Dependencies
+
+This project relies on several major libraries to function properly:
+
+- `Dio`: A powerful HTTP client for Dart, which supports Interceptors, Global configuration, FormData, Request Cancellation, File downloading, Timeout, etc.
+- `Retrofit`: A type-safe HTTP client for Dart and Flutter, inspired by Retrofit for Android.
+- `RxDart`: Provides additional functionality on top of the Dart Streams API for asynchronous programming.
+- `Easy Localization`: Simplifies the internationalization process in Flutter.
+- `Geocoding`: Provides geocoding and reverse geocoding of addresses.
+- `Permission Handler`: A permissions plugin for Flutter which can manage app permissions.
+- `Flutter ScreenUtil`: A Flutter plugin for adapting screen and font size, allowing your UI to display properly on different screen sizes.
+- `Geolocator`: A Flutter geolocation plugin which provides easy access to platform-specific location services.
+- `Fluttertoast`: A plugin to show short message notifications to the user.
+- `Dartz`: A library for functional programming in Dart.
+- `Flutter Bloc`: A predictable state management library that helps implement the BLoC design pattern.
+- `Equatable`: A Dart package that helps to implement value-based equality without needing to explicitly override == and hashCode.
+- `Get It`: A simple service locator for managing state and dependencies.
+
+## Architecture
+
+This project follows the principles of Clean Architecture, which is an architectural approach that separates the software into concentric layers with a strong emphasis on separation of concerns and scalability. The main components of this architecture in the project are:
+
+- `Entities`: These are the business objects of the application.
+- `Use Cases`: These are the business rules of the application. Each use case is a set of actions that can be executed.
+- `Repositories`: These are interfaces that represent the data layer and are implemented in the data layer.
+- `Data Sources`: These are the actual data providers, such as network requests, database access, etc.
+- `Presentation Layer (Bloc)`: This is where the UI components and user interactions are handled.
+
+The Clean Architecture allows the separation of code in a way that makes it easier to test and maintain. It also ensures that the application is not dependent on any external agency.
+
+## Running the Project
 Once you have Flutter and Dart set up, you can run the project using the following steps:
 
 1. Clone the repository to your local machine.

@@ -95,51 +95,14 @@ class $AssetsFontsGen {
 class $AssetsImagesGen {
   const $AssetsImagesGen();
 
-  /// File path: assets/images/Cloud-background.png
-  AssetGenImage get cloudBackground =>
-      const AssetGenImage('assets/images/Cloud-background.png');
+  /// File path: assets/images/ss1.jpg
+  AssetGenImage get ss1 => const AssetGenImage('assets/images/ss1.jpg');
 
-  /// File path: assets/images/clear.png
-  AssetGenImage get clear => const AssetGenImage('assets/images/clear.png');
-
-  /// File path: assets/images/cloudy.png
-  AssetGenImage get cloudy => const AssetGenImage('assets/images/cloudy.png');
-
-  /// File path: assets/images/fog.png
-  AssetGenImage get fog => const AssetGenImage('assets/images/fog.png');
-
-  /// File path: assets/images/light_freezing_rain.png
-  AssetGenImage get lightFreezingRain =>
-      const AssetGenImage('assets/images/light_freezing_rain.png');
-
-  /// File path: assets/images/light_rain.png
-  AssetGenImage get lightRain =>
-      const AssetGenImage('assets/images/light_rain.png');
-
-  /// File path: assets/images/mostly_clear.png
-  AssetGenImage get mostlyClear =>
-      const AssetGenImage('assets/images/mostly_clear.png');
-
-  /// File path: assets/images/mostly_cloudy.png
-  AssetGenImage get mostlyCloudy =>
-      const AssetGenImage('assets/images/mostly_cloudy.png');
-
-  /// File path: assets/images/partly_cloudy.png
-  AssetGenImage get partlyCloudy =>
-      const AssetGenImage('assets/images/partly_cloudy.png');
+  /// File path: assets/images/ss2.jpg
+  AssetGenImage get ss2 => const AssetGenImage('assets/images/ss2.jpg');
 
   /// List of all assets
-  List<AssetGenImage> get values => [
-        cloudBackground,
-        clear,
-        cloudy,
-        fog,
-        lightFreezingRain,
-        lightRain,
-        mostlyClear,
-        mostlyCloudy,
-        partlyCloudy
-      ];
+  List<AssetGenImage> get values => [ss1, ss2];
 }
 
 class $AssetsLocalesGen {

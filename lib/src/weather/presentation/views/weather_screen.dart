@@ -9,6 +9,7 @@ import 'package:lottie/lottie.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:tomorrow_weather/core/services/location_service.dart';
 import 'package:tomorrow_weather/core/utils/connectivity/connectivity_listner.dart';
+import 'package:tomorrow_weather/core/utils/constants.dart';
 import 'package:tomorrow_weather/core/utils/widget_helpers/widget_helpers.dart';
 import 'package:tomorrow_weather/gen/assets.gen.dart';
 import 'package:tomorrow_weather/gen/colors.gen.dart';
@@ -27,9 +28,10 @@ class WeatherScreen extends StatefulWidget {
   @override
   State<WeatherScreen> createState() => _WeatherScreenState();
 }
-// This class extends the state of the WeatherScreen and implements the ConnectivityListener interface.
-class _WeatherScreenState extends State<WeatherScreen> implements ConnectivityListener {
 
+// This class extends the state of the WeatherScreen and implements the ConnectivityListener interface.
+class _WeatherScreenState extends State<WeatherScreen>
+    implements ConnectivityListener {
   // This controller is used to manage the text in the city name input field.
   final TextEditingController cityNameController = TextEditingController();
 
@@ -89,10 +91,13 @@ class _WeatherScreenState extends State<WeatherScreen> implements ConnectivityLi
   Widget build(BuildContext context) {
     return BlocConsumer<WeatherBloc, WeatherState>(
       listener: (context, state) {
+        // This block of code handles the different states of the WeatherBloc.
         if (state is! WeatherLoaded && _apiTimer != null) {
+          // This block of code cancels the timer if the state is not WeatherLoaded.
           _apiTimer!.cancel();
         }
         if (state is WeatherErrorWithData) {
+          // This block of code shows a snackbar with the error message if the state is WeatherErrorWithData.
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(state.message),
@@ -106,9 +111,10 @@ class _WeatherScreenState extends State<WeatherScreen> implements ConnectivityLi
             ),
           );
         } else if (state is WeatherLoaded) {
+          // This block of code sets up a timer to periodically call the API to fetch the latest weather data
           if (_apiTimer != null) _apiTimer!.cancel();
           _apiTimer = Timer.periodic(
-            const Duration(minutes: 5),
+            kShortPollingDuration,
             (timer) {
               updateWeather(state);
             },
@@ -123,6 +129,7 @@ class _WeatherScreenState extends State<WeatherScreen> implements ConnectivityLi
             enablePullDown: state is WeatherLoaded,
             controller: refreshController,
             onRefresh: () async {
+              // This block of code handles the pull-to-refresh functionality.
               if (!hasInternet) {
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(
@@ -138,7 +145,9 @@ class _WeatherScreenState extends State<WeatherScreen> implements ConnectivityLi
             onLoading: () async {
               refreshController.loadComplete();
             },
-            child: state is WeatherInitial || state is FetchingWeather
+            child: state is WeatherInitial ||
+                    state
+                        is FetchingWeather // This block of code shows a loading indicator witch Shimmer Effect
                 ? WeatherView(
                     weather: Weather.empty(),
                     forecast: WeatherForecast.empty(),
@@ -213,6 +222,7 @@ class _WeatherScreenState extends State<WeatherScreen> implements ConnectivityLi
   @override
   void dispose() {
     ConnectivityHelper.instance.addListener(this);
+    _apiTimer?.cancel();
     super.dispose();
   }
 
