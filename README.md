@@ -1,16 +1,11 @@
 Tomorrow Weather
 Tomorrow Weather is a Flutter-based weather application that uses the Tomorrow.io weather APIs to provide weather forecasts. This application is compatible with both Android and iOS platforms.
 
-## Screenshots
-
-![Screenshot 1](./screenshots/ss1.jpg)
-![Screenshot 2](./screenshots/ss2.jpg)
-
 Features
 Current weather conditions
 Hourly and weekly forecasts
 Location-based weather updates
-
+Lottie animations
 To run this project, you need to have Flutter and Dart installed on your system. If you haven't installed them yet, you can follow the instructions on the Flutter website.
 
 ## Configuration
@@ -79,5 +74,11 @@ Once you have Flutter and Dart set up, you can run the project using the followi
    Contributing
    Contributions are welcome! Please read our contributing guidelines to get started.
 
-License
-This project is licensed under the terms of the MIT license. See the LICENSE file for details.
+## Screenshots
+
+![Screenshot 1](./screenshots/ss1.jpg)
+![Screenshot 2](./screenshots/ss2.jpg)
+
+## About the Author
+
+This project was created by [vancityAyush](https://github.com/vancityAyush). I am a passionate developer with experience in Kotlin, Java, Dart, and Gradle. I enjoy working on projects that involve complex architectures and innovative solutions. Feel free to reach out to me for any questions, suggestions, or collaboration opportunities.
