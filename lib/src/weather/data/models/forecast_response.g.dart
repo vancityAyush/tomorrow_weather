@@ -27,7 +27,7 @@ ForecastTimelines _$ForecastTimelinesFromJson(Map<String, dynamic> json) =>
           .map((e) => WeatherModel.fromJson(e as Map<String, dynamic>))
           .toList(),
       (json['daily'] as List<dynamic>)
-          .map((e) => WeatherModel.fromJson(e as Map<String, dynamic>))
+          .map((e) => DailyWeatherModel.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 

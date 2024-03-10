@@ -1,26 +1,29 @@
-import 'package:equatable/equatable.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-class Weather extends Equatable {
-  final num temp;
-  final String main;
-  final String description;
-  final String name;
+part 'weather.freezed.dart';
 
-  const Weather({
-    required this.temp,
-    required this.main,
-    required this.name,
-    required this.description,
-  });
+@freezed
+class Weather with _$Weather {
+  const factory Weather(
+      {required String address,
+      required num temperature,
+      required num main,
+      required num feelsLike,
+      required num humidity,
+      required num windSpeed,
+      required num windDirection,
+      required num visibility,
+      required String iconPath}) = _Weather;
 
-  @override
-  List<Object?> get props => [temp, name, main, description];
-
-  const Weather.empty()
-      : this(
-          temp: 0.0,
-          main: "_empty.main",
-          name: "_empty.name",
-          description: "_empty.decription",
-        );
+  factory Weather.empty() => const Weather(
+        address: 'Unknown',
+        temperature: 0,
+        main: 0,
+        feelsLike: 0,
+        humidity: 0,
+        windSpeed: 0,
+        windDirection: 0,
+        visibility: 0,
+        iconPath: 'Unknown',
+      );
 }

@@ -1,7 +1,8 @@
 import 'dart:async';
 
-import 'package:json_annotation/json_annotation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:tomorrow_weather/core/utils/helpers/time_utils.dart';
+import 'package:tomorrow_weather/src/weather/data/enums/weather_code.dart';
 
 part 'weather_model.g.dart';
 
@@ -21,47 +22,25 @@ class WeatherModel {
 
 @JsonSerializable()
 class WeatherData {
-  final num? cloudBase;
-  final num? cloudCeiling;
-  final num? cloudCover;
-  final num? dewPoint;
-  final num? freezingRainIntensity;
   final num? humidity;
   final num? precipitationProbability;
-  final num? pressureSurfaceLevel;
-  final num? rainIntensity;
-  final num? sleetIntensity;
-  final num? snowIntensity;
   final num? temperature;
   final num? temperatureApparent;
-  final num? uvHealthConcern;
   final num? uvIndex;
   final num? visibility;
-  final num weatherCode;
+  final WeatherCode weatherCode;
   final num? windDirection;
-  final num? windGust;
   final num? windSpeed;
 
   WeatherData(
-      {this.cloudBase,
-      this.cloudCeiling,
-      this.cloudCover,
-      this.dewPoint,
-      this.freezingRainIntensity,
-      this.humidity,
+      {this.humidity,
       this.precipitationProbability,
-      this.pressureSurfaceLevel,
-      this.rainIntensity,
-      this.sleetIntensity,
-      this.snowIntensity,
       this.temperature,
       this.temperatureApparent,
-      this.uvHealthConcern,
       this.uvIndex,
       this.visibility,
       required this.weatherCode,
       this.windDirection,
-      this.windGust,
       this.windSpeed});
 
   factory WeatherData.fromJson(Map<String, dynamic> json) =>

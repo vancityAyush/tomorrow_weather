@@ -1,6 +1,7 @@
 import 'package:tomorrow_weather/core/usecase/usecase.dart';
 import 'package:tomorrow_weather/core/utils/typedef.dart';
 import 'package:tomorrow_weather/src/weather/domain/entities/weather.dart';
+import 'package:tomorrow_weather/src/weather/domain/entities/weather_forecast.dart';
 import 'package:tomorrow_weather/src/weather/domain/repositories/weather_repository.dart';
 
 class FetchLocationWeather extends UsecaseWithParams<Weather, LocationParams> {
@@ -10,7 +11,21 @@ class FetchLocationWeather extends UsecaseWithParams<Weather, LocationParams> {
 
   @override
   ResultFuture<Weather> call(LocationParams params) async =>
-      _repository.fetchLocationWeather(
+      _repository.fetchLocationWeatherRealtime(
+        lat: params.lat,
+        long: params.long,
+      );
+}
+
+class FetchLocationForecast
+    extends UsecaseWithParams<WeatherForecast, LocationParams> {
+  const FetchLocationForecast(this._repository);
+
+  final WeatherRepository _repository;
+
+  @override
+  ResultFuture<WeatherForecast> call(LocationParams params) async =>
+      _repository.fetchLocationWeatherForecast(
         lat: params.lat,
         long: params.long,
       );

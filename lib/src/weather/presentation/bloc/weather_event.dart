@@ -28,3 +28,23 @@ class FetchLocationWeatherEvent extends WeatherEvent {
   @override
   List<Object> get props => [lat, long];
 }
+
+class UpdateWeatherEvent extends WeatherEvent {
+  final String query;
+  final WeatherForecast forecast;
+  const UpdateWeatherEvent({
+    required this.query,
+    required this.forecast,
+  });
+
+  @override
+  List<Object> get props => [query, forecast];
+}
+
+class NoInternetEvent extends WeatherEvent {
+  const NoInternetEvent();
+}
+
+class NoPermissionEvent extends WeatherEvent {
+  const NoPermissionEvent();
+}

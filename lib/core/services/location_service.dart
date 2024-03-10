@@ -16,6 +16,11 @@ class LocationService {
   final BehaviorSubject<Position> _currentLocationController =
       BehaviorSubject<Position>();
   Position get currentLocation => _currentLocationController.value;
+  bool get hasPermission =>
+      _permission == LocationPermission.always ||
+      _permission == LocationPermission.whileInUse;
+
+  LocationPermission _permission = LocationPermission.denied;
 
   Position dummyPosition = Position(
     longitude: 0,
@@ -43,6 +48,15 @@ class LocationService {
     }
   }
 
+  init() async {
+    _permission = await Geolocator.checkPermission();
+    if (hasPermission) {
+      LocationService.instance.getCurrentOrLastKnownPosition();
+    } else if (_permission == LocationPermission.denied) {
+      _permission = await Geolocator.requestPermission();
+    }
+  }
+
   Future<void> getCurrentOrLastKnownPosition() async {
     Position? lastKnownPosition = await Geolocator.getLastKnownPosition();
     if (lastKnownPosition != null) {
@@ -57,7 +71,6 @@ class LocationService {
   // For GPS Stream
   Stream<ServiceStatus> get gpsStatus => Geolocator.getServiceStatusStream();
 
-  // TODO-Critical : Stop the stream subscription in Beta release
   StreamSubscription<Position>? _positionStreamSubscription;
   startUpdatingLocation() {
     try {
@@ -76,35 +89,10 @@ class LocationService {
     await _positionStreamSubscription?.cancel();
   }
 
-  // TODO: Confirm with shek and remove logic from here and move it to the respective screen - compass_widget.dart
-  late StreamSubscription<Position> locationStreamSubscription;
-
-  void startLocationSubscription(
-      Function(String location) onLocationChange) async {
-    await startUpdatingLocation();
-    double latitude = 0;
-    double longitude = 0;
-    locationStreamSubscription = _currentLocationController.listen(
-      (position) async {
-        if (position.latitude.toInt() != latitude.toInt() ||
-            position.longitude.toInt() != longitude.toInt()) {
-          String location = await LocationService.getCityAndState(position);
-          onLocationChange(location);
-        }
-        latitude = position.latitude;
-        longitude = position.longitude;
-      },
-    );
-  }
-
-  void stopLocationSubscription() {
-    locationStreamSubscription.cancel();
-  }
-
   // Reverse Geocoding Function
-  static Future<String> getCityAndState(Position position) async {
-    List<Placemark> placemarks =
-        await placemarkFromCoordinates(position.latitude, position.longitude);
+  Future<String> getCityAndState(
+      {required double lat, required double long}) async {
+    List<Placemark> placemarks = await placemarkFromCoordinates(lat, long);
     Placemark placemark = placemarks[0];
     String city = "";
     if (placemark.subLocality.isNotNullAndEmpty()) {

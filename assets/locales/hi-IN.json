@@ -1,17 +1,4 @@
 {
   "app_name": "मेरा ऐप",
-  "message": "हिंदी",
-  "onboarding": {
-    "title": "हेलो",
-    "subtitle": "नीचे जानकारी दर्ज करें"
-  },
-  "cancel": "Cancel",
-  "bluetoothConnectivity": {
-    "letsConnectYourEbike" : "LETS CONNECT YOUR E BIKE",
-    "tips" : "Tips",
-    "itMayTakeUpto2Mins": "IT MAY TAKE UP TO 2 MINUTES",
-    "stayInTheAppUntilDeviceConnected" : "STAY IN THE APP UNTIL DEVICE CONNECTED",
-    "stayCloseToYourBLEDevice" : "STAY CLOSE TO YOUR BLE DEVICE",
-    "getStarted": "GET STARTED"
-  }
+  "message": "हिंदी"
 }

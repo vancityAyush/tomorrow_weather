@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:json_annotation/json_annotation.dart';
+import 'package:tomorrow_weather/src/weather/data/models/daily_weather_model.dart';
 import 'package:tomorrow_weather/src/weather/data/models/location_model.dart';
 import 'package:tomorrow_weather/src/weather/data/models/weather_model.dart';
 
@@ -23,9 +24,13 @@ class ForecastResponse {
 class ForecastTimelines {
   final List<WeatherModel> minutely;
   final List<WeatherModel> hourly;
-  final List<WeatherModel> daily;
+  final List<DailyWeatherModel> daily;
 
-  ForecastTimelines(this.minutely, this.hourly, this.daily);
+  ForecastTimelines(
+    this.minutely,
+    this.hourly,
+    this.daily,
+  );
 
   factory ForecastTimelines.fromJson(Map<String, dynamic> json) =>
       _$ForecastTimelinesFromJson(json);

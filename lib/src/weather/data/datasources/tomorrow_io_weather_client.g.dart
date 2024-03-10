@@ -21,7 +21,7 @@ class _TomorrowIoWeatherClient implements TomorrowIoWeatherClient {
   String? baseUrl;
 
   @override
-  Future<RealtimeResponse> getCurrentWeather({
+  Future<RealtimeResponse> getRealtimeWeather({
     required String location,
     UnitType unitType = UnitType.metric,
     required String apiKey,
@@ -56,7 +56,7 @@ class _TomorrowIoWeatherClient implements TomorrowIoWeatherClient {
   }
 
   @override
-  Future<RealtimeResponse> getWeatherForecast({
+  Future<ForecastResponse> getWeatherForecast({
     required String location,
     UnitType unitType = UnitType.metric,
     required String apiKey,
@@ -70,14 +70,14 @@ class _TomorrowIoWeatherClient implements TomorrowIoWeatherClient {
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
     final _result = await _dio
-        .fetch<Map<String, dynamic>>(_setStreamType<RealtimeResponse>(Options(
+        .fetch<Map<String, dynamic>>(_setStreamType<ForecastResponse>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
     )
             .compose(
               _dio.options,
-              '/weather/realtime',
+              '/weather/forecast',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -86,7 +86,7 @@ class _TomorrowIoWeatherClient implements TomorrowIoWeatherClient {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = await compute(deserializeRealtimeResponse, _result.data!);
+    final value = await compute(deserializeForecastResponse, _result.data!);
     return value;
   }
 
