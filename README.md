@@ -5,10 +5,7 @@ Features
 Current weather conditions
 Hourly and weekly forecasts
 Location-based weather updates
-Lottie animations
-To run this project, you need to have Flutter and Dart installed on your system. If you haven't installed them yet, you can follow the instructions on the Flutter website.
-
-Please ensure to run these commands every time you make changes to the files that need code generation.
+Lottie animation
 
 ## Dependencies
 
